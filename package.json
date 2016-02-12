@@ -1,7 +1,7 @@
 {
   "name": "wizipsum",
   "version": "1.0.0",
-  "description": "",
+  "description": "We all have funny mates, right?",
   "main": "dist/wizipsum.js",
   "files": [
     "dist",

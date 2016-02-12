@@ -1,6 +1,6 @@
 /*!
  * wizipsum - v1.0.0
- * 
+ * We all have funny mates, right?
  * https://github.com/wizbii/wizipsum
  *
  * @author Wizbii <dev@wizbii.com>
