@@ -2,6 +2,7 @@
 
 We all have funny mates, right?
 
+* [Demo](https://wizbii.github.io/wizipsum)
 * [Introduction](https://github.com/wizbii/wizipsum#introduction)
 * [DIY](https://github.com/wizbii/wizipsum#diy)
 * [Installation](https://github.com/wizbii/wizipsum#installation)
