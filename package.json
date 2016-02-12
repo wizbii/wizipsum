@@ -1,0 +1,57 @@
+{
+  "name": "wizipsum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/wizipsum.js",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "lint": "standard",
+    "dev": "webpack --progress --colors --watch",
+    "pretest": "npm run lint",
+    "test": "karma start --single-run",
+    "prebuild": "npm run test",
+    "build": "rm -rf dist/* && webpack && webpack -p -d"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wizbii/wizipsum.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/wizbii/wizipsum/issues"
+  },
+  "homepage": "https://github.com/wizbii/wizipsum",
+  "author": "Wizbii <dev@wizbii.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-preset-es2015": "*",
+    "jasmine-core": "*",
+    "karma": "*",
+    "karma-jasmine": "*",
+    "karma-phantomjs-launcher": "*",
+    "karma-webpack": "*",
+    "lodash": "4.3.0",
+    "phantomjs-prebuilt": "*",
+    "standard": "*",
+    "webpack": "*",
+    "yargs": "*"
+  }
+}
