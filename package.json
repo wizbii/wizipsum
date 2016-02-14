@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "zip": "bestzip extension.zip icon.png popup.html manifest.json css/ scripts/",
-    "styles": "rm css/* && node-sass scss/styles.scss --output-style compressed | postcss --use autoprefixer --output css/styles.css",
+    "zip": "bestzip extension.zip icon.png popup.html manifest.json public/",
+    "styles": "rm public/css/* && node-sass src/scss/styles.scss --output-style compressed | postcss --use autoprefixer --output public/css/styles.css",
     "prebuild": "npm run styles",
-    "build": "rm scripts/* && webpack -p",
+    "build": "rm public/scripts/* && webpack -p",
     "postbuild": "npm run zip"
   },
   "devDependencies": {

@@ -2,11 +2,11 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    popup: "./src/popup.js",
-    content: "./src/content.js"
+    popup: "./src/js/popup.js",
+    content: "./src/js/content.js"
   },
   output: {
-    path: path.join(__dirname, 'scripts'),
+    path: path.join(__dirname, 'public', 'scripts'),
     filename: '[name].js'
   }
 }
