@@ -1,57 +1,19 @@
 {
-  "name": "wizipsum",
-  "version": "1.0.0",
-  "description": "We all have funny mates, right?",
-  "main": "dist/wizipsum.js",
-  "files": [
-    "dist",
-    "src",
-    "LICENSE",
-    "package.json",
-    "README.md"
-  ],
+  "private": true,
   "scripts": {
-    "lint": "standard",
-    "dev": "webpack --progress --colors --watch",
-    "pretest": "npm run lint",
-    "test": "karma start --single-run",
-    "prebuild": "npm run test",
-    "build": "rm -rf dist/* && webpack && webpack -p -d"
+    "zip": "bestzip extension.zip icon.png popup.html manifest.json css/ scripts/",
+    "styles": "rm css/* && node-sass scss/styles.scss --output-style compressed | postcss --use autoprefixer --output css/styles.css",
+    "prebuild": "npm run styles",
+    "build": "rm scripts/* && webpack -p",
+    "postbuild": "npm run zip"
   },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
-  "standard": {
-    "ignore": [
-      "dist"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wizbii/wizipsum.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/wizbii/wizipsum/issues"
-  },
-  "homepage": "https://github.com/wizbii/wizipsum",
-  "author": "Wizbii <dev@wizbii.com>",
-  "license": "MIT",
   "devDependencies": {
-    "babel-core": "*",
-    "babel-loader": "*",
-    "babel-preset-es2015": "*",
-    "jasmine-core": "*",
-    "karma": "*",
-    "karma-jasmine": "*",
-    "karma-phantomjs-launcher": "*",
-    "karma-webpack": "*",
-    "lodash": "4.3.0",
-    "phantomjs-prebuilt": "*",
-    "standard": "*",
+    "autoprefixer": "*",
+    "bestzip": "*",
+    "node-sass": "*",
+    "postcss": "*",
+    "postcss-cli": "*",
     "webpack": "*",
-    "yargs": "*"
+    "wizipsum": "*"
   }
 }

@@ -1,0 +1,97 @@
+$font-family-base: Rubik, sans-serif;
+$font-size-root: 16px;
+$font-size-base: 1rem;
+$line-height-base: 1.4;
+
+$color-accent: #FB1954;
+$color-primary: #130377;
+$color-secondary: #FFE203;
+$color-text: #3d3d3d;
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: $font-size-root;
+}
+
+body {
+  font-family: $font-family-base;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: $line-height-base;
+  color: $color-text;
+  padding: 1rem;
+  min-width: 200px;
+}
+
+h1 {
+  color: $color-primary;
+  line-height: 1.2;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &:not(:last-of-type) {
+    margin-bottom: 1.5rem;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  li {
+    float: left;
+    width: (100% / 6);
+
+    &:first-child button {
+      border-radius: 6px 0 0 6px;
+    }
+
+    &:last-child button {
+      border-radius: 0 6px 6px 0;
+    }
+
+    button {
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      color: $color-accent;
+      font-size: inherit;
+      font-weight: inherit;
+      border: 0;
+      background: $color-secondary;
+      padding: 6px;
+
+      &:hover {
+        background: darken($color-secondary, 6%);
+      }
+
+      &:focus {
+        outline: none;
+        color: $color-secondary;
+        background: $color-accent;
+      }
+    }
+  }
+}

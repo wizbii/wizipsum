@@ -1,33 +1,12 @@
-var webpack = require('webpack')
-const argv = require('yargs').argv
-const pkg = require('./package.json')
-
-const banner = [
-  '/*!',
-  ` * ${pkg.name} - v${pkg.version}`,
-  ` * ${pkg.description}`,
-  ` * ${pkg.homepage}`,
-  ' *',
-  ` * @author ${pkg.author}`,
-  ` * @license ${pkg.license}`,
-  ' */',
-  ''
-].join('\n')
+var path = require('path')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    popup: "./src/popup.js",
+    content: "./src/content.js"
+  },
   output: {
-    path: 'dist',
-    filename: pkg.name.toLowerCase() + (argv.p ? '.min' : '') + '.js',
-    library: pkg.name,
-    libraryTarget: 'umd'
-  },
-  module: {
-    loaders: [
-      { test: /\.js$/, loaders: ['babel-loader'] }
-    ]
-  },
-  plugins: [
-    new webpack.BannerPlugin(banner, { raw: true })
-  ]
+    path: path.join(__dirname, 'scripts'),
+    filename: '[name].js'
+  }
 }
