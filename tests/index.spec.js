@@ -16,7 +16,7 @@ describe('wizipsum', function () {
 
   describe('the paragraph function', function () {
     it('should return a number of paragraphs', function () {
-      expect(generator.paragraph(3).match(/\n/g).length).toBe(3)
+      expect(generator.paragraph(3).match(/\n\n/g).length).toBe(3)
     })
 
     it('should wrap the paragraphs with given wrappers', function () {
@@ -31,8 +31,8 @@ describe('wizipsum', function () {
 
   describe('the sentence function', function () {
     it('should return a number of sentences', function () {
-      expect(generator.sentence(1).match(/\n/g).length).toBe(1)
-      expect(generator.sentence(2).match(/\n/g).length).toBe(2)
+      expect(generator.sentence(1).match(/\n\n/g).length).toBe(1)
+      expect(generator.sentence(2).match(/\n\n/g).length).toBe(2)
     })
 
     it('should wrap the sentences with given wrappers', function () {

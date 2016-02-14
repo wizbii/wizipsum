@@ -1,7 +1,7 @@
 const sample = require('lodash/sample')
 
 module.exports = function (strs) {
-  function paragraph (nb = 1, wrappers = ['', '\n'], averageLength = 400) {
+  function paragraph (nb = 1, wrappers = ['', '\n\n'], averageLength = 400) {
     const result = []
 
     for (let i = 0; i < nb; i++) {
@@ -13,7 +13,7 @@ module.exports = function (strs) {
     return wrap(result, wrappers)
   }
 
-  function sentence (nb = 1, wrappers = ['', '\n']) {
+  function sentence (nb = 1, wrappers = ['', '\n\n']) {
     const result = []
 
     for (let i = 0; i < nb; i++) {
