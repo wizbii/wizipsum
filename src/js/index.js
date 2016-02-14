@@ -1,10 +1,18 @@
 const wizipsum = require('wizipsum')
 const xhr = require('./xhr')
+const list = require('../../public/data/index.json')
 const defaultName = 'wizbii'
 const range = document.querySelector('[type=range]')
 const output = document.getElementById('output')
 const dataName = document.getElementById('data-name')
 let generator
+
+list.forEach(function (item) {
+  const option = document.createElement('option')
+  option.value = item
+  option.textContent = item
+  dataName.insertBefore(option, dataName.lastElementChild)
+})
 
 range.addEventListener('input', function (e) {
   const nb = Number(e.target.value)
