@@ -48,7 +48,7 @@ const generator = wizipsum(['Some string there.', 'And some more here.'])
 
 ### API
 
-#### paragraph
+#### `.paragraph(nb = 1, wrappers = ['', '\n'], averageLength = 400)`
 
 Returns a number of paragraphs composed of random strings (from *strs*).
 
@@ -56,7 +56,7 @@ Returns a number of paragraphs composed of random strings (from *strs*).
 
 1. **nb** (default: `1`) - The number of paragraphs to generate.
 2. **wrappers** (default: `['', '\n']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
-3. **averageLength** (default: 400) - The average length of each paragraphs.
+3. **averageLength** (default: `400`) - The average length of each paragraphs.
 
 **Example**
 
@@ -68,7 +68,7 @@ generator.paragraph(2, ['<p>', '</p>'], 30)
 // '<p>Some string there. And some more here.</p><p>And some more here. And some more here.</p>'
 ```
 
-#### sentence
+#### `.sentence(nb = 1, wrappers = ['', '\n'])`
 
 Returns a number of sentences composed of random strings (from *strs*).
 
@@ -87,7 +87,7 @@ generator.sentence(2, ['<p>', '</p>'])
 // '<p>Some string there.</p><p>And some more here.</p>'
 ```
 
-#### word
+#### `.word(nb = 1, wrappers = ['', ' '])`
 
 Returns a number of words composed of random strings (from *strs*).
 
