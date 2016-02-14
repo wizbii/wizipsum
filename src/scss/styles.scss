@@ -1,0 +1,252 @@
+$font-family-base: Rubik, sans-serif;
+$font-family-heading: Fascinate Inline, sans-serif;
+$font-size-root: 16px;
+$font-size-base: 1rem;
+$line-height-base: 1.4;
+
+$color-accent: #FB1954;
+//$color-accent: #FF0084;
+$color-primary: #FFE203;
+$color-secondary: #130377;
+$color-text: #3d3d3d;
+
+@function ms ($level) {
+  @if $level == 2 {
+    @return 3.2rem;
+  }
+
+  @if $level == 1 {
+    @return 1.6rem;
+  }
+
+  @if $level == 0 {
+    @return 1rem;
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: $font-size-root;
+}
+
+body,
+#output {
+  color: #fff;
+  background-color: $color-secondary;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: ms(0);
+  line-height: $line-height-base;
+  color: $color-text;
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+  font-weight: bold;
+  margin: 0;
+}
+
+h1,
+a {
+  color: $color-accent;
+}
+
+h1 {
+  font-family: $font-family-heading;
+  font-size: ms(2);
+}
+
+h2 {
+  font-size: ms(1);
+  margin-bottom: .2rem;
+}
+
+p,
+ul,
+input[type=range] {
+  margin: 0 0 ms(1) 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+main {
+  max-width: 600px;
+  padding: ms(2) ms(1);
+  margin: 0 auto;
+}
+
+#header,
+#output {
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(.17,.67,.28,1.73);
+}
+
+#header {
+  transform: scale(0.8) rotateZ(-8deg) translateY(-20px);
+}
+
+#output {
+  transform: scale(0.8) rotateZ(8deg) translateY(-20px);
+  transition-delay: 0.2s;
+}
+
+.enter-animation {
+  #header,
+  #output {
+    opacity: 1;
+  }
+
+  #header {
+    transform: scale(1) rotateZ(-2deg) translateY(0);
+  }
+
+  #output {
+    transform: scale(1) rotateZ(2deg) translateY(0);
+  }
+}
+
+#header,
+#output {
+  padding: ms(1);
+}
+
+#header {
+  background-color: $color-primary;
+  margin-right: ms(2);
+}
+
+#output {
+  position: relative;
+  top: -(ms(1));
+  margin-left: ms(2);
+
+  &:before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 14px 20px 0 20px;
+    border-color: $color-primary transparent transparent transparent;
+    position: absolute;
+    top: -1px;
+    right: 6rem;
+  }
+}
+
+/*--------------------------------*\
+  range input
+
+  Thanks to:
+  https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css
+  http://danielstern.ca/range.css
+\*--------------------------------*/
+
+$track-height: 4px;
+$track-background: $color-accent;
+
+@mixin track-styles {
+  width: 100%;
+  cursor: pointer;
+  height: $track-height;
+  background: $track-background;
+}
+
+@mixin track ($vendor) {
+  @if $vendor == ms {
+    &::-ms-track {
+      width: 100%;
+      height: $track-height;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+
+    &::-ms-fill-lower {
+      background: $track-background;
+    }
+
+    &::-ms-fill-upper {
+      background: $track-background;
+    }
+  }
+
+  @if $vendor == webkit {
+    &::-webkit-slider-runnable-track { @include track-styles; }
+  }
+
+  @if $vendor == moz {
+    &::-moz-range-track { @include track-styles; }
+  }
+}
+
+@mixin thumb-styles {
+  $height: 24px;
+  $width: $height;
+  $border-width: 4px;
+
+  cursor: pointer;
+  border: $border-width solid $color-primary;
+  height: $height;
+  width: $width;
+  border-radius: 50%;
+  background: $color-accent;
+  margin-top: -(($height - ($border-width * 2)) / 2);
+}
+
+@mixin thumb ($vendor) {
+  @if $vendor == webkit {
+    &::-webkit-slider-thumb {
+      @include thumb-styles;
+      -webkit-appearance: none;
+    }
+  }
+
+  @if $vendor == moz {
+    &::-moz-range-thumb { @include thumb-styles; }
+  }
+
+  @if $vendor == ms {
+    &::-ms-thumb { @include thumb-styles; }
+  }
+}
+
+input[type=range] {
+  width: 100%;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+
+  &:focus { outline: none; }
+
+  @include track(webkit);
+  @include thumb(webkit);
+
+  @include thumb(moz);
+  @include track(moz);
+
+  @include track(ms);
+  @include thumb(ms);
+}
