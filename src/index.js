@@ -13,7 +13,7 @@ module.exports = function (strs) {
     return wrap(result, wrappers)
   }
 
-  function sentence (nb = 1, wrappers = ['', '\n\n']) {
+  function sentence (nb = 1, wrappers = ['', ' ']) {
     const result = []
 
     for (let i = 0; i < nb; i++) {

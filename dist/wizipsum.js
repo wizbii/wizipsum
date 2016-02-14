@@ -1,5 +1,5 @@
 /*!
- * wizipsum - v2.1.0
+ * wizipsum - v2.2.0
  * We all have funny mates, right?
  * https://github.com/wizbii/wizipsum
  *
@@ -87,7 +87,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  function sentence() {
 	    var nb = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
-	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', '\n\n'] : arguments[1];
+	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', ' '] : arguments[1];
 
 	    var result = [];
 

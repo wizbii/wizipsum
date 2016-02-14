@@ -68,14 +68,14 @@ generator.paragraph(2, ['<p>', '</p>'], 30)
 // '<p>Some string there. And some more here.</p><p>And some more here. And some more here.</p>'
 ```
 
-#### `.sentence(nb = 1, wrappers = ['', '\n\n'])`
+#### `.sentence(nb = 1, wrappers = ['', ' '])`
 
 Returns a number of sentences composed of random strings (from *strs*).
 
 **Arguments**
 
 1. **nb** (default: `1`) - The number of paragraphs to generate.
-2. **wrappers** (default: `['', '\n\n']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
+2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
 
 **Example**
 
