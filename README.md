@@ -6,7 +6,7 @@ We all have funny mates, right?
 * [Introduction](https://github.com/wizbii/wizipsum#introduction)
 * [DIY](https://github.com/wizbii/wizipsum#diy)
 * [Installation](https://github.com/wizbii/wizipsum#installation)
-* [API](https://github.com/wizbii/wizipsum#api)
+* [Documentation](https://github.com/wizbii/wizipsum#documentation)
 
 ## Introduction
 
@@ -31,35 +31,77 @@ const generator = wizipsum(['Fill this array', 'with any slangs', 'you want'])
 console.log(generator())
 ```
 
-## API
+## Documentation
 
-### wizipsum
+wizipsum is a function that accepts only one argument and returns the api.
 
-wizipsum is a function that accepts four arguments:
+**Arguments**
 
-1. **data** (required): A list of strings
-2. **paragraphs** (default: `1`): The number of paragraphs to generate
-3. **wrappers** (default: `['', '\n']`): An array of two items, the first one will be added to the start of each paragraph while the other one will be added to the end. That's pretty useful if you want to create `<p></p>` elements.
-4. **maxlength** (default: `400`): A paragrah's maxlength
+1. **strs** (required) - An array of strings
 
-It returns a function that generates random text from **data**.
-
-#### Example
+**Example**
 
 ```javascript
 const wizipsum = require('wizipsum')
-const generator = wizipsum(['Foo', 'Bar'], 2, ['<p>', '</p>'], 10)
-
-generator()
-// '<p>Bar Foo Bar</p><p>Bar Bar Foo</p>'
+const generator = wizipsum(['Some string there.', 'And some more here.'])
 ```
 
-The "generator" function also accepts **paragraphs**, **wrappers** and **maxlength** if you want to overwrite the default for a call:
+### API
+
+#### paragraph
+
+Returns a number of paragraphs composed of random strings (from *strs*).
+
+**Arguments**
+
+1. **nb** (default: `1`) - The number of paragraphs to generate.
+2. **wrappers** (default: `['', '\n']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
+3. **averageLength** (default: 400) - The average length of each paragraphs.
+
+**Example**
 
 ```javascript
 const wizipsum = require('wizipsum')
-const generator = wizipsum(['Foo', 'Bar'], 2, ['<p>', '</p>'], 10)
+const generator = wizipsum(['Some string there.', 'And some more here.'])
 
-generator(4, ['', '<br>'], 4)
-// 'Bar Foo<br>Foo Foo<br>Foo Bar<br>Bar Bar<br>'
+generator.paragraph(2, ['<p>', '</p>'], 30)
+// '<p>Some string there. And some more here.</p><p>And some more here. And some more here.</p>'
+```
+
+#### sentence
+
+Returns a number of sentences composed of random strings (from *strs*).
+
+**Arguments**
+
+1. **nb** (default: `1`) - The number of paragraphs to generate.
+2. **wrappers** (default: `['', '\n']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
+
+**Example**
+
+```javascript
+const wizipsum = require('wizipsum')
+const generator = wizipsum(['Some string there.', 'And some more here.'])
+
+generator.sentence(2, ['<p>', '</p>'])
+// '<p>Some string there.</p><p>And some more here.</p>'
+```
+
+#### word
+
+Returns a number of words composed of random strings (from *strs*).
+
+**Arguments**
+
+1. **nb** (default: `1`) - The number of paragraphs to generate.
+2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
+
+**Example**
+
+```javascript
+const wizipsum = require('wizipsum')
+const generator = wizipsum(['Some string there.', 'And some more here.'])
+
+generator.word(3, ['<strong>', '<strong>'])
+// '<strong>string</strong><strong>some</strong><strong>there</strong>'
 ```

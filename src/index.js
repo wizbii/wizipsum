@@ -1,19 +1,49 @@
 const sample = require('lodash/sample')
 
-module.exports = function (data, paragraphs = 1, wrappers = ['', '\n'], maxlength = 400) {
-  const defaults = { maxlength, paragraphs, wrappers }
+module.exports = function (strs) {
+  function paragraph (nb = 1, wrappers = ['', '\n'], averageLength = 400) {
+    const result = []
 
-  return function (paragraphs = defaults.paragraphs, wrappers = defaults.wrappers, maxlength = defaults.maxlength) {
-    const content = []
-
-    for (let i = 0; i < paragraphs; i++) {
+    for (let i = 0; i < nb; i++) {
       let str = ''
-
-      // -1 is accounting for the white space
-      while ((str.length - 1) < maxlength) str += sample(data) + ' '
-      content.push(str.trim())
+      while (str.length < averageLength) str += `${sample(data())} `
+      result.push(str.trim())
     }
 
-    return content.map((str) => wrappers[0] + str + wrappers[1]).join('')
+    return wrap(result, wrappers)
   }
+
+  function sentence (nb = 1, wrappers = ['', '\n']) {
+    const result = []
+
+    for (let i = 0; i < nb; i++) {
+      result.push(sample(data()))
+    }
+
+    return wrap(result, wrappers)
+  }
+
+  function word (nb = 1, wrappers = ['', ' ']) {
+    const result = []
+
+    for (let i = 0; i < nb; i++) {
+      const randomStr = sample(data())
+      const words = randomStr.split(' ')
+
+      result.push(sample(words))
+    }
+
+    return wrap(result, wrappers)
+  }
+
+  function data () {
+    if (arguments.length > 0) strs = arguments[0]
+    return strs
+  }
+
+  function wrap (result, wrappers) {
+    return result.map((str) => wrappers[0] + str + wrappers[1]).join('')
+  }
+
+  return { paragraph, sentence, word, data }
 }

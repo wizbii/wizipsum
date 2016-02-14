@@ -67,33 +67,65 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var sample = __webpack_require__(1);
 
-	module.exports = function (data) {
-	  var paragraphs = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-	  var wrappers = arguments.length <= 2 || arguments[2] === undefined ? ['', '\n'] : arguments[2];
-	  var maxlength = arguments.length <= 3 || arguments[3] === undefined ? 400 : arguments[3];
+	module.exports = function (strs) {
+	  function paragraph() {
+	    var nb = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', '\n'] : arguments[1];
+	    var averageLength = arguments.length <= 2 || arguments[2] === undefined ? 400 : arguments[2];
 
-	  var defaults = { maxlength: maxlength, paragraphs: paragraphs, wrappers: wrappers };
+	    var result = [];
 
-	  return function () {
-	    var paragraphs = arguments.length <= 0 || arguments[0] === undefined ? defaults.paragraphs : arguments[0];
-	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? defaults.wrappers : arguments[1];
-	    var maxlength = arguments.length <= 2 || arguments[2] === undefined ? defaults.maxlength : arguments[2];
-
-	    var content = [];
-
-	    for (var i = 0; i < paragraphs; i++) {
+	    for (var i = 0; i < nb; i++) {
 	      var str = '';
-
-	      // -1 is accounting for the white space
-	      while (str.length - 1 < maxlength) {
-	        str += sample(data) + ' ';
-	      }content.push(str.trim());
+	      while (str.length < averageLength) {
+	        str += sample(data()) + ' ';
+	      }result.push(str.trim());
 	    }
 
-	    return content.map(function (str) {
+	    return wrap(result, wrappers);
+	  }
+
+	  function sentence() {
+	    var nb = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', '\n'] : arguments[1];
+
+	    var result = [];
+
+	    for (var i = 0; i < nb; i++) {
+	      result.push(sample(data()));
+	    }
+
+	    return wrap(result, wrappers);
+	  }
+
+	  function word() {
+	    var nb = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', ' '] : arguments[1];
+
+	    var result = [];
+
+	    for (var i = 0; i < nb; i++) {
+	      var randomStr = sample(data());
+	      var words = randomStr.split(' ');
+
+	      result.push(sample(words));
+	    }
+
+	    return wrap(result, wrappers);
+	  }
+
+	  function data() {
+	    if (arguments.length > 0) strs = arguments[0];
+	    return strs;
+	  }
+
+	  function wrap(result, wrappers) {
+	    return result.map(function (str) {
 	      return wrappers[0] + str + wrappers[1];
 	    }).join('');
-	  };
+	  }
+
+	  return { paragraph: paragraph, sentence: sentence, word: word, data: data };
 	};
 
 /***/ },
