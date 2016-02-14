@@ -49,6 +49,7 @@ body,
 
 body {
   font-family: $font-family-base;
+  font-weight: 300;
   font-size: ms(0);
   line-height: $line-height-base;
   color: $color-text;
@@ -249,4 +250,25 @@ input[type=range] {
 
   @include track(ms);
   @include thumb(ms);
+}
+
+/*--------------------------------*\
+  select
+\*--------------------------------*/
+
+select {
+  cursor: pointer;
+  display: inline-block;
+  min-width: 160px;
+  color: $color-text;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  border: 0;
+  background-image: url('../images/dropdown-arrow.svg');
+  background-size: 12px;
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  -webkit-appearance: none;
 }

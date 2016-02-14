@@ -11,6 +11,17 @@ range.addEventListener('input', function (e) {
   setParagraphs(nb)
 }, false)
 
+dataName.addEventListener('change', function (e) {
+  const value = e.target.value
+
+  if (value === 'diy') {
+    window.location.href = 'https://github.com/wizbii/wizipsum/tree/gh-pages#add-yours'
+    return
+  }
+
+  selectData(value)
+}, false)
+
 let attempts = 0
 ;(function getData (name = window.location.hash.substr(1) || defaultName) {
   selectData(
@@ -40,9 +51,10 @@ function selectData (name, onError = () => {}, onSuccess = () => {}) {
       return
     }
 
-    dataName.innerHTML = name
+    dataName.value = name
     generator = wizipsum(result)
     window.location.hash = name
+    setParagraphs(1)
 
     onSuccess(result)
   })
