@@ -44,6 +44,13 @@ h1 {
   margin: 0 0 0.5rem 0;
 }
 
+select {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
 ul {
   list-style: none;
   padding: 0;

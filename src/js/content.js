@@ -1,10 +1,10 @@
 /* global chrome, CustomEvent */
 
 var wizipsum = require('wizipsum')
-var generator = wizipsum(['Hello World!', 'Some foo and bar.'])
 
 chrome.runtime.onMessage.addListener(function (message) {
   if (message.from === 'background' && message.action === 'fill') {
+    var generator = wizipsum(message.data)
     var type = message.type
     var nb = message.nb
 
