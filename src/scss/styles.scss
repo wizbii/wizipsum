@@ -1,12 +1,11 @@
-$font-family-base: Rubik, sans-serif;
+$font-family-base: Source Sans Pro, sans-serif;
 $font-size-root: 16px;
 $font-size-base: 1rem;
 $line-height-base: 1.4;
 
-$color-accent: #FB1954;
-$color-primary: #130377;
-$color-secondary: #FFE203;
-$color-text: #3d3d3d;
+$color-primary: #dcf1b2;
+$color-secondary: darken($color-primary, 30%);
+$color-text: darken($color-primary, 68%);
 
 *,
 *:before,
@@ -36,19 +35,18 @@ body {
 }
 
 h1 {
-  color: $color-primary;
   line-height: 1.2;
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-transform: uppercase;
   font-weight: bold;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.2rem 0;
 }
 
 select {
   cursor: pointer;
   display: block;
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 
 ul {
@@ -83,21 +81,20 @@ ul {
       cursor: pointer;
       display: block;
       width: 100%;
-      color: $color-accent;
+      color: inherit;
       font-size: inherit;
       font-weight: inherit;
       border: 0;
-      background: $color-secondary;
+      background: $color-primary;
       padding: 6px;
 
       &:hover {
-        background: darken($color-secondary, 6%);
+        background: $color-secondary;
       }
 
       &:focus {
         outline: none;
-        color: $color-secondary;
-        background: $color-accent;
+        background: darken($color-secondary, 10%);
       }
     }
   }
