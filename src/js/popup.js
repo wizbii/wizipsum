@@ -5,7 +5,7 @@ var select = document.getElementById('name')
 
 ;(function getList (callback) {
   xhr.get('https://wizbii.github.io/wizipsum/public/data/index.json', function (err, list) {
-    if (err) return getList()
+    if (err) return getList(callback)
 
     list.forEach(function (item) {
       var option = document.createElement('option')
