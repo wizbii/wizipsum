@@ -39,7 +39,7 @@ let attempts = 0
       getData(defaultName)
     },
     function () {
-      setParagraphs(1)
+      setParagraphs(2)
       setTimeout(() => document.body.classList.add('enter-animation'), 0)
     }
   )
