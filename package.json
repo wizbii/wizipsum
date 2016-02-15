@@ -15,6 +15,9 @@
     "dev": "webpack --progress --colors --watch -p -d",
     "prebuild": "npm run lint",
     "build": "rm -rf public/js/* && webpack -p -d",
+    "serve": "browser-sync start --server --files 'index.html, public/css/*.css, public/js/*.js'",
+    "prewatch:styles": "npm run styles",
+    "watch:styles": "onchange 'src/scss/**/*.scss' -- npm run styles",
     "styles": "node-sass src/scss/styles.scss --output-style compressed | postcss --use autoprefixer --output public/css/styles.css"
   },
   "devDependencies": {
@@ -22,8 +25,10 @@
     "babel-core": "*",
     "babel-loader": "*",
     "babel-preset-es2015": "*",
+    "browser-sync": "2.11.1",
     "json-loader": "0.5.4",
     "node-sass": "*",
+    "onchange": "2.0.0",
     "postcss": "*",
     "postcss-cli": "*",
     "standard": "*",
