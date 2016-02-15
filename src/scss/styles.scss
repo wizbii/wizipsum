@@ -1,28 +1,12 @@
-$font-family-base: Rubik, sans-serif;
-$font-family-heading: Fascinate Inline, sans-serif;
-$font-size-root: 16px;
+$font-family-base: Source Sans Pro, sans-serif;
+$font-family-heading: Roboto Slab, serif;
 $font-size-base: 1rem;
 $line-height-base: 1.4;
 
-$color-accent: #FB1954;
-//$color-accent: #FF0084;
-$color-primary: #FFE203;
-$color-secondary: #130377;
-$color-text: #3d3d3d;
-
-@function ms ($level) {
-  @if $level == 2 {
-    @return 3.2rem;
-  }
-
-  @if $level == 1 {
-    @return 1.6rem;
-  }
-
-  @if $level == 0 {
-    @return 1rem;
-  }
-}
+$color-primary: #dcf1b2;
+$color-secondary: darken($color-primary, 30%);
+$color-text: darken($color-primary, 68%);//454c36
+$module: 2rem;
 
 *,
 *:before,
@@ -34,124 +18,83 @@ html,
 body {
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
 html {
   box-sizing: border-box;
-  font-size: $font-size-root;
-}
+  font-size: 14px;
+  height: 100%;
 
-body,
-#output {
-  color: #fff;
-  background-color: $color-secondary;
+  @media (min-width: 480px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
 }
 
 body {
   font-family: $font-family-base;
-  font-weight: 300;
-  font-size: ms(0);
   line-height: $line-height-base;
+  font-weight: 300;
   color: $color-text;
-}
-
-h1,
-h2 {
-  line-height: 1.2;
-  font-weight: bold;
-  margin: 0;
-}
-
-h1,
-a {
-  color: $color-accent;
+  background-color: $color-primary;
+  min-height: 100%;
+  border: ($module / 2) solid #fff;
 }
 
 h1 {
   font-family: $font-family-heading;
-  font-size: ms(2);
+  line-height: 1.2;
+  font-size: 2.8rem;
+  margin: 0;
 }
 
-h2 {
-  font-size: ms(1);
-  margin-bottom: .2rem;
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: $module;
 }
 
-p,
-ul,
-input[type=range] {
-  margin: 0 0 ms(1) 0;
+.block {
+  background-color: #fff;
+  margin: (-($module / 1.5)) (-$module) ($module / 1.5) (-$module);
+  padding: ($module * 2) $module $module $module;
 }
 
 ul {
   list-style: none;
+  margin: 0;
   padding: 0;
-}
 
-main {
-  max-width: 600px;
-  padding: ms(2) ms(1);
-  margin: 0 auto;
-}
-
-#header,
-#output {
-  opacity: 0;
-  transition-property: transform, opacity;
-  transition-duration: 0.6s;
-  transition-timing-function: cubic-bezier(.17,.67,.28,1.73);
-}
-
-#header {
-  transform: scale(0.8) rotateZ(-8deg) translateY(-20px);
-}
-
-#output {
-  transform: scale(0.8) rotateZ(8deg) translateY(-20px);
-  transition-delay: 0.2s;
-}
-
-.enter-animation {
-  #header,
-  #output {
-    opacity: 1;
-  }
-
-  #header {
-    transform: scale(1) rotateZ(-2deg) translateY(0);
-  }
-
-  #output {
-    transform: scale(1) rotateZ(2deg) translateY(0);
+  li {
+    display: inline-block;
+    margin: 0 ($module / 3) ($module / 3) 0;
   }
 }
 
-#header,
-#output {
-  padding: ms(1);
+a {
+  color: $color-text;
+  text-decoration: none;
+  border-bottom: 1px solid $color-secondary;
+
+  &:focus,
+  &:hover {
+    background-color: lighten($color-secondary, 20%);
+  }
 }
 
-#header {
-  background-color: $color-primary;
-  margin-right: ms(2);
+input[type="range"] {
+  margin-bottom: $module;
 }
 
-#output {
-  position: relative;
-  top: -(ms(1));
-  margin-left: ms(2);
+p {
+  margin: 0 0 $module 0;
 
-  &:before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 14px 20px 0 20px;
-    border-color: $color-primary transparent transparent transparent;
-    position: absolute;
-    top: -1px;
-    right: 6rem;
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -163,8 +106,8 @@ main {
   http://danielstern.ca/range.css
 \*--------------------------------*/
 
-$track-height: 4px;
-$track-background: $color-accent;
+$track-height: 2px;
+$track-background: $color-secondary;
 
 @mixin track-styles {
   width: 100%;
@@ -208,12 +151,12 @@ $track-background: $color-accent;
   $border-width: 4px;
 
   cursor: pointer;
-  border: $border-width solid $color-primary;
+  border: $border-width solid #fff;
   height: $height;
   width: $width;
   border-radius: 50%;
-  background: $color-accent;
-  margin-top: -(($height - ($border-width * 2)) / 2);
+  background: $color-secondary;
+  margin-top: -(($height - $border-width) / 2);
 }
 
 @mixin thumb ($vendor) {
@@ -266,9 +209,10 @@ select {
   padding: 0;
   border: 0;
   background-image: url('../images/dropdown-arrow.svg');
-  background-size: 12px;
+  background-size: 2rem;
   background-position: center right;
   background-repeat: no-repeat;
   background-color: transparent;
+  border-radius: 0;
   -webkit-appearance: none;
 }
