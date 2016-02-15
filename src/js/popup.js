@@ -2,6 +2,8 @@
 
 var xhr = require('./xhr')
 var select = document.getElementById('name')
+var loading = document.getElementById('loading')
+var notLoading = document.getElementById('not-loading')
 
 ;(function getList (callback) {
   xhr.get('https://wizbii.github.io/wizipsum/public/data/index.json', function (err, list) {
@@ -24,13 +26,23 @@ var select = document.getElementById('name')
   selectData('wizbii')
 
   function selectData (name) {
+    loading.style.display = 'block'
+    notLoading.style.display = 'none'
+
     xhr.get('https://wizbii.github.io/wizipsum/public/data/' + name + '.json', function (err, result) {
       if (err) return selectData('wizbii')
 
       data = result
       if (select.value !== name) select.value = name
+
+      loading.style.display = 'none'
+      notLoading.style.display = 'block'
     })
   }
+
+  select.addEventListener('change', function (e) {
+    selectData(e.target.value)
+  }, false)
 
   document.addEventListener('click', function (e) {
     if (e.target.tagName.toLowerCase() !== 'button') return
