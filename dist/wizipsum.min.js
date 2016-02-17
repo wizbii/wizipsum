@@ -1,5 +1,5 @@
 /*!
- * wizipsum - v2.2.0
+ * wizipsum - v2.3.0
  * We all have funny mates, right?
  * https://github.com/wizbii/wizipsum
  *
