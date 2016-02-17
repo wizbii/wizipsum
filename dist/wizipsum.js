@@ -122,8 +122,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    for (var i = 0; i < nb; i++) {
 	      var randomStr = picker();
 	      var words = randomStr.split(' ');
+	      var _word = sample(words).toLowerCase().replace(/[^-a-z0-9]/g, '');
 
-	      result.push(sample(words));
+	      result.push(_word);
 	    }
 
 	    return wrap(result, wrappers);

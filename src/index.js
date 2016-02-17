@@ -44,8 +44,9 @@ module.exports = function (strs) {
     for (let i = 0; i < nb; i++) {
       const randomStr = picker()
       const words = randomStr.split(' ')
+      const word = sample(words).toLowerCase().replace(/[^-a-z0-9]/g, '')
 
-      result.push(sample(words))
+      result.push(word)
     }
 
     return wrap(result, wrappers)
