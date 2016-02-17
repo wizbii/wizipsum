@@ -3,7 +3,7 @@
 We all have funny mates, right?
 
 * [Demo Page](https://wizbii.github.io/wizipsum)
-* [Browser Extension]()
+* [Chrome Extension](https://chrome.google.com/webstore/detail/wizipsum/ncibdpfgnoldfhagojkniefnaokacfhf)
 
 ## Add yours
 
