@@ -11,7 +11,7 @@ describe('wizipsum', function () {
   })
 
   it('should return the api', function () {
-    expect(Object.keys(generator)).toEqual(['paragraph', 'sentence', 'word', 'data'])
+    expect(Object.keys(generator)).toEqual(['paragraph', 'sentence', 'title', 'word', 'data'])
   })
 
   describe('the paragraph function', function () {

@@ -1,5 +1,6 @@
 const random = require('lodash/random')
 const sample = require('lodash/sample')
+const startCase = require('lodash/startCase')
 
 function pickNSplice (origin) {
   let ar = []
@@ -37,6 +38,10 @@ module.exports = function (strs) {
     return wrap(result, wrappers)
   }
 
+  function title (nb = 1, wrappers = ['', '']) {
+    return startCase(sentence(nb, wrappers))
+  }
+
   function word (nb = 1, wrappers = ['', ' ']) {
     const result = []
     const picker = pickNSplice(data())
@@ -61,5 +66,5 @@ module.exports = function (strs) {
     return result.map((str) => wrappers[0] + str + wrappers[1]).join('')
   }
 
-  return { paragraph, sentence, word, data }
+  return { paragraph, sentence, title, word, data }
 }
