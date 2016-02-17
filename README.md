@@ -74,8 +74,8 @@ Returns a number of sentences composed of random strings (from *strs*).
 
 **Arguments**
 
-1. **nb** (default: `1`) - The number of paragraphs to generate.
-2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
+1. **nb** (default: `1`) - The number of sentences to generate.
+2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each sentences while the second is added to the end.
 
 **Example**
 
@@ -87,14 +87,35 @@ generator.sentence(2, ['<p>', '</p>'])
 // '<p>Some string there.</p><p>And some more here.</p>'
 ```
 
-#### `.word(nb = 1, wrappers = ['', ' '])`
+#### `.title(nb = 1, wrappers = ['', ' '])`
 
-Returns a number of words composed of random strings (from *strs*).
+Title actually calls `sentence` and upper case every starting letter.
 
 **Arguments**
 
-1. **nb** (default: `1`) - The number of paragraphs to generate.
-2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each paragraphs while the second is added to the end.
+1. **nb** (default: `1`) - The number of titles to generate.
+2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each titles while the second is added to the end.
+
+**Example**
+
+```javascript
+const wizipsum = require('wizipsum')
+const generator = wizipsum(['Some string there.', 'And some more here.'])
+
+generator.title(2, ['<p>', '</p>'])
+// '<p>Some String There.</p><p>And Some More Here.</p>'
+```
+
+#### `.word(nb = 1, wrappers = ['', ' '])`
+
+Returns a number of words composed of random strings (from *strs*).
+Note: the words are also lower cased and every non alphanumeric characters are removed (except for the "-").
+Which makes this function great if you want to generate hashtags-like words (use the `['#', ' ']` wrappers and you're good).
+
+**Arguments**
+
+1. **nb** (default: `1`) - The number of words to generate.
+2. **wrappers** (default: `['', ' ']`) - The first item will be added to the start of each words while the second is added to the end.
 
 **Example**
 
