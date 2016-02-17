@@ -65,7 +65,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var sample = __webpack_require__(1);
+	var random = __webpack_require__(1);
+	var sample = __webpack_require__(13);
+
+	function pickNSplice(origin) {
+	  var ar = [];
+
+	  return function () {
+	    if (ar.length === 0) ar = origin.slice();
+
+	    var index = random(0, ar.length - 1);
+	    return ar.splice(index, 1)[0];
+	  };
+	}
 
 	module.exports = function (strs) {
 	  function paragraph() {
@@ -74,11 +86,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var averageLength = arguments.length <= 2 || arguments[2] === undefined ? 400 : arguments[2];
 
 	    var result = [];
+	    var picker = pickNSplice(data());
 
 	    for (var i = 0; i < nb; i++) {
 	      var str = '';
 	      while (str.length < averageLength) {
-	        str += sample(data()) + ' ';
+	        str += picker() + ' ';
 	      }result.push(str.trim());
 	    }
 
@@ -90,9 +103,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', ' '] : arguments[1];
 
 	    var result = [];
+	    var picker = pickNSplice(data());
 
 	    for (var i = 0; i < nb; i++) {
-	      result.push(sample(data()));
+	      result.push(picker());
 	    }
 
 	    return wrap(result, wrappers);
@@ -103,9 +117,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var wrappers = arguments.length <= 1 || arguments[1] === undefined ? ['', ' '] : arguments[1];
 
 	    var result = [];
+	    var picker = pickNSplice(data());
 
 	    for (var i = 0; i < nb; i++) {
-	      var randomStr = sample(data());
+	      var randomStr = picker();
 	      var words = randomStr.split(' ');
 
 	      result.push(sample(words));
@@ -135,30 +150,84 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var baseRandom = __webpack_require__(2),
-	    isArrayLike = __webpack_require__(3),
-	    values = __webpack_require__(9);
+	    isIterateeCall = __webpack_require__(3),
+	    toNumber = __webpack_require__(12);
+
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseFloat = parseFloat;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMin = Math.min,
+	    nativeRandom = Math.random;
 
 	/**
-	 * Gets a random element from `collection`.
+	 * Produces a random number between the inclusive `lower` and `upper` bounds.
+	 * If only one argument is provided a number between `0` and the given number
+	 * is returned. If `floating` is `true`, or either `lower` or `upper` are floats,
+	 * a floating-point number is returned instead of an integer.
+	 *
+	 * **Note:** JavaScript follows the IEEE-754 standard for resolving
+	 * floating-point values which can produce unexpected results.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @category Collection
-	 * @param {Array|Object} collection The collection to sample.
-	 * @returns {*} Returns the random element.
+	 * @category Number
+	 * @param {number} [lower=0] The lower bound.
+	 * @param {number} [upper=1] The upper bound.
+	 * @param {boolean} [floating] Specify returning a floating-point number.
+	 * @returns {number} Returns the random number.
 	 * @example
 	 *
-	 * _.sample([1, 2, 3, 4]);
-	 * // => 2
+	 * _.random(0, 5);
+	 * // => an integer between 0 and 5
+	 *
+	 * _.random(5);
+	 * // => also an integer between 0 and 5
+	 *
+	 * _.random(5, true);
+	 * // => a floating-point number between 0 and 5
+	 *
+	 * _.random(1.2, 5.2);
+	 * // => a floating-point number between 1.2 and 5.2
 	 */
-	function sample(collection) {
-	    var array = isArrayLike(collection) ? collection : values(collection),
-	        length = array.length;
-
-	    return length > 0 ? array[baseRandom(0, length - 1)] : undefined;
+	function random(lower, upper, floating) {
+	  if (floating && typeof floating != 'boolean' && isIterateeCall(lower, upper, floating)) {
+	    upper = floating = undefined;
+	  }
+	  if (floating === undefined) {
+	    if (typeof upper == 'boolean') {
+	      floating = upper;
+	      upper = undefined;
+	    } else if (typeof lower == 'boolean') {
+	      floating = lower;
+	      lower = undefined;
+	    }
+	  }
+	  if (lower === undefined && upper === undefined) {
+	    lower = 0;
+	    upper = 1;
+	  } else {
+	    lower = toNumber(lower) || 0;
+	    if (upper === undefined) {
+	      upper = lower;
+	      lower = 0;
+	    } else {
+	      upper = toNumber(upper) || 0;
+	    }
+	  }
+	  if (lower > upper) {
+	    var temp = lower;
+	    lower = upper;
+	    upper = temp;
+	  }
+	  if (floating || lower % 1 || upper % 1) {
+	    var rand = nativeRandom();
+	    return nativeMin(lower + rand * (upper - lower + freeParseFloat('1e-' + ((rand + '').length - 1))), upper);
+	  }
+	  return baseRandom(lower, upper);
 	}
 
-	module.exports = sample;
+	module.exports = random;
 
 /***/ },
 /* 2 */
@@ -191,9 +260,86 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var getLength = __webpack_require__(4),
-	    isFunction = __webpack_require__(6),
-	    isLength = __webpack_require__(8);
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var eq = __webpack_require__(4),
+	    isArrayLike = __webpack_require__(5),
+	    isIndex = __webpack_require__(11),
+	    isObject = __webpack_require__(9);
+
+	/**
+	 * Checks if the given arguments are from an iteratee call.
+	 *
+	 * @private
+	 * @param {*} value The potential iteratee value argument.
+	 * @param {*} index The potential iteratee index or key argument.
+	 * @param {*} object The potential iteratee object argument.
+	 * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
+	 */
+	function isIterateeCall(value, index, object) {
+	  if (!isObject(object)) {
+	    return false;
+	  }
+	  var type = typeof index === 'undefined' ? 'undefined' : _typeof(index);
+	  if (type == 'number' ? isArrayLike(object) && isIndex(index, object.length) : type == 'string' && index in object) {
+	    return eq(object[index], value);
+	  }
+	  return false;
+	}
+
+	module.exports = isIterateeCall;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Performs a [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 * var other = { 'user': 'fred' };
+	 *
+	 * _.eq(object, object);
+	 * // => true
+	 *
+	 * _.eq(object, other);
+	 * // => false
+	 *
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
+	 */
+	function eq(value, other) {
+	  return value === other || value !== value && other !== other;
+	}
+
+	module.exports = eq;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var getLength = __webpack_require__(6),
+	    isFunction = __webpack_require__(8),
+	    isLength = __webpack_require__(10);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -227,12 +373,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isArrayLike;
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var baseProperty = __webpack_require__(5);
+	var baseProperty = __webpack_require__(7);
 
 	/**
 	 * Gets the "length" property value of `object`.
@@ -249,7 +395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = getLength;
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -270,12 +416,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = baseProperty;
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isObject = __webpack_require__(7);
+	var isObject = __webpack_require__(9);
 
 	/** `Object#toString` result references. */
 	var funcTag = '[object Function]',
@@ -317,7 +463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isFunction;
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -355,7 +501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isObject;
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -394,13 +540,137 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isLength;
 
 /***/ },
-/* 9 */
+/* 11 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  value = typeof value == 'number' || reIsUint.test(value) ? +value : -1;
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return value > -1 && value % 1 == 0 && value < length;
+	}
+
+	module.exports = isIndex;
+
+/***/ },
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var baseValues = __webpack_require__(10),
-	    keys = __webpack_require__(12);
+	var isFunction = __webpack_require__(8),
+	    isObject = __webpack_require__(9);
+
+	/** Used as references for various `Number` constants. */
+	var NAN = 0 / 0;
+
+	/** Used to match leading and trailing whitespace. */
+	var reTrim = /^\s+|\s+$/g;
+
+	/** Used to detect bad signed hexadecimal string values. */
+	var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+	/** Used to detect binary string values. */
+	var reIsBinary = /^0b[01]+$/i;
+
+	/** Used to detect octal string values. */
+	var reIsOctal = /^0o[0-7]+$/i;
+
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseInt = parseInt;
+
+	/**
+	 * Converts `value` to a number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {number} Returns the number.
+	 * @example
+	 *
+	 * _.toNumber(3);
+	 * // => 3
+	 *
+	 * _.toNumber(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toNumber(Infinity);
+	 * // => Infinity
+	 *
+	 * _.toNumber('3');
+	 * // => 3
+	 */
+	function toNumber(value) {
+	  if (isObject(value)) {
+	    var other = isFunction(value.valueOf) ? value.valueOf() : value;
+	    value = isObject(other) ? other + '' : other;
+	  }
+	  if (typeof value != 'string') {
+	    return value === 0 ? value : +value;
+	  }
+	  value = value.replace(reTrim, '');
+	  var isBinary = reIsBinary.test(value);
+	  return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+	}
+
+	module.exports = toNumber;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var baseRandom = __webpack_require__(2),
+	    isArrayLike = __webpack_require__(5),
+	    values = __webpack_require__(14);
+
+	/**
+	 * Gets a random element from `collection`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Collection
+	 * @param {Array|Object} collection The collection to sample.
+	 * @returns {*} Returns the random element.
+	 * @example
+	 *
+	 * _.sample([1, 2, 3, 4]);
+	 * // => 2
+	 */
+	function sample(collection) {
+	    var array = isArrayLike(collection) ? collection : values(collection),
+	        length = array.length;
+
+	    return length > 0 ? array[baseRandom(0, length - 1)] : undefined;
+	}
+
+	module.exports = sample;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var baseValues = __webpack_require__(15),
+	    keys = __webpack_require__(17);
 
 	/**
 	 * Creates an array of the own enumerable property values of `object`.
@@ -434,12 +704,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = values;
 
 /***/ },
-/* 10 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var arrayMap = __webpack_require__(11);
+	var arrayMap = __webpack_require__(16);
 
 	/**
 	 * The base implementation of `_.values` and `_.valuesIn` which creates an
@@ -460,7 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = baseValues;
 
 /***/ },
-/* 11 */
+/* 16 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -488,17 +758,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = arrayMap;
 
 /***/ },
-/* 12 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var baseHas = __webpack_require__(13),
-	    baseKeys = __webpack_require__(14),
-	    indexKeys = __webpack_require__(15),
-	    isArrayLike = __webpack_require__(3),
-	    isIndex = __webpack_require__(22),
-	    isPrototype = __webpack_require__(23);
+	var baseHas = __webpack_require__(18),
+	    baseKeys = __webpack_require__(19),
+	    indexKeys = __webpack_require__(20),
+	    isArrayLike = __webpack_require__(5),
+	    isIndex = __webpack_require__(11),
+	    isPrototype = __webpack_require__(27);
 
 	/**
 	 * Creates an array of the own enumerable property names of `object`.
@@ -548,7 +818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = keys;
 
 /***/ },
-/* 13 */
+/* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -582,7 +852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = baseHas;
 
 /***/ },
-/* 14 */
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -606,16 +876,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = baseKeys;
 
 /***/ },
-/* 15 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var baseTimes = __webpack_require__(16),
-	    isArguments = __webpack_require__(17),
-	    isArray = __webpack_require__(20),
-	    isLength = __webpack_require__(8),
-	    isString = __webpack_require__(21);
+	var baseTimes = __webpack_require__(21),
+	    isArguments = __webpack_require__(22),
+	    isArray = __webpack_require__(25),
+	    isLength = __webpack_require__(10),
+	    isString = __webpack_require__(26);
 
 	/**
 	 * Creates an array of index keys for `object` values of arrays,
@@ -636,7 +906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = indexKeys;
 
 /***/ },
-/* 16 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -663,12 +933,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = baseTimes;
 
 /***/ },
-/* 17 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isArrayLikeObject = __webpack_require__(18);
+	var isArrayLikeObject = __webpack_require__(23);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]';
@@ -712,13 +982,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isArguments;
 
 /***/ },
-/* 18 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isArrayLike = __webpack_require__(3),
-	    isObjectLike = __webpack_require__(19);
+	var isArrayLike = __webpack_require__(5),
+	    isObjectLike = __webpack_require__(24);
 
 	/**
 	 * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -751,7 +1021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isArrayLikeObject;
 
 /***/ },
-/* 19 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -788,7 +1058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isObjectLike;
 
 /***/ },
-/* 20 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -821,13 +1091,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isArray;
 
 /***/ },
-/* 21 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isArray = __webpack_require__(20),
-	    isObjectLike = __webpack_require__(19);
+	var isArray = __webpack_require__(25),
+	    isObjectLike = __webpack_require__(24);
 
 	/** `Object#toString` result references. */
 	var stringTag = '[object String]';
@@ -864,35 +1134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isString;
 
 /***/ },
-/* 22 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	/** Used as references for various `Number` constants. */
-	var MAX_SAFE_INTEGER = 9007199254740991;
-
-	/** Used to detect unsigned integer values. */
-	var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-	/**
-	 * Checks if `value` is a valid array-like index.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
-	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
-	 */
-	function isIndex(value, length) {
-	  value = typeof value == 'number' || reIsUint.test(value) ? +value : -1;
-	  length = length == null ? MAX_SAFE_INTEGER : length;
-	  return value > -1 && value % 1 == 0 && value < length;
-	}
-
-	module.exports = isIndex;
-
-/***/ },
-/* 23 */
+/* 27 */
 /***/ function(module, exports) {
 
 	'use strict';

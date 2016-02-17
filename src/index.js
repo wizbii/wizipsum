@@ -1,12 +1,25 @@
+const random = require('lodash/random')
 const sample = require('lodash/sample')
+
+function pickNSplice (origin) {
+  let ar = []
+
+  return function () {
+    if (ar.length === 0) ar = origin.slice()
+
+    const index = random(0, ar.length - 1)
+    return ar.splice(index, 1)[0]
+  }
+}
 
 module.exports = function (strs) {
   function paragraph (nb = 1, wrappers = ['', '\n\n'], averageLength = 400) {
     const result = []
+    const picker = pickNSplice(data())
 
     for (let i = 0; i < nb; i++) {
       let str = ''
-      while (str.length < averageLength) str += `${sample(data())} `
+      while (str.length < averageLength) str += `${picker()} `
       result.push(str.trim())
     }
 
@@ -15,9 +28,10 @@ module.exports = function (strs) {
 
   function sentence (nb = 1, wrappers = ['', ' ']) {
     const result = []
+    const picker = pickNSplice(data())
 
     for (let i = 0; i < nb; i++) {
-      result.push(sample(data()))
+      result.push(picker())
     }
 
     return wrap(result, wrappers)
@@ -25,9 +39,10 @@ module.exports = function (strs) {
 
   function word (nb = 1, wrappers = ['', ' ']) {
     const result = []
+    const picker = pickNSplice(data())
 
     for (let i = 0; i < nb; i++) {
-      const randomStr = sample(data())
+      const randomStr = picker()
       const words = randomStr.split(' ')
 
       result.push(sample(words))
