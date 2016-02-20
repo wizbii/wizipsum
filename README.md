@@ -14,7 +14,7 @@ All you have to do is:
 
 1. Add your data to the [src/data.json](https://github.com/wizbii/wizipsum/blob/gh-pages/public/data/wizbii.json) file
 2. `npm install`
-3. `npm build`
+3. `npm run build`
 4. Submit your pull request
 
 When your contribution gets merged, you'll then be able to share it via, e.g: https://wizbii.github.io/wizipsum#yourdata
