@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "fetch": "node fetch.js",
+    "fetch": "curl https://raw.githubusercontent.com/wizbii/wizipsum/gh-pages/src/data.json > src/data.json",
     "zip": "bestzip extension.zip icon.png popup.html manifest.json public/",
     "styles": "rm public/css/* && node-sass src/scss/styles.scss --output-style compressed | postcss --use autoprefixer --output public/css/styles.css",
     "prebuild": "npm run styles",
@@ -15,7 +15,6 @@
     "node-sass": "*",
     "postcss": "*",
     "postcss-cli": "*",
-    "request": "*",
     "webpack": "*",
     "wizipsum": "*"
   }
