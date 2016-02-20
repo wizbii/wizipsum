@@ -42,7 +42,10 @@ body {
   color: $color-text;
   background-color: $color-primary;
   min-height: 100%;
-  border: ($module / 2) solid #fff;
+
+  @media (min-width: 480px) {
+    border: ($module / 2) solid #fff;
+  }
 }
 
 h1 {

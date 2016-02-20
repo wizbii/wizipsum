@@ -1,69 +1,59 @@
 const wizipsum = require('wizipsum')
-const xhr = require('./xhr')
-const list = require('../../public/data/index.json')
-const defaultName = 'wizbii'
+const data = require('../data.json')
+
+const sources = Object.keys(data)
+
+const select = document.querySelector('select')
 const range = document.querySelector('[type=range]')
 const output = document.getElementById('output')
-const dataName = document.getElementById('data-name')
+
 let generator
 
-list.forEach(function (item) {
+// add an option for each data source available
+sources.forEach(function (item) {
   const option = document.createElement('option')
+
   option.value = item
   option.textContent = item
-  dataName.insertBefore(option, dataName.lastElementChild)
+
+  // the last element is the "add yours" option
+  // which we want to keep last
+  select.insertBefore(option, select.lastElementChild)
 })
 
-range.addEventListener('input', function (e) {
-  const nb = Number(e.target.value)
-  setParagraphs(nb)
-}, false)
+// update the number of pragraphs displayed
+// according to the range input's value
+range.addEventListener('input', () => setParagraphs(range.value), false)
 
-dataName.addEventListener('change', function (e) {
-  const value = e.target.value
+select.addEventListener('change', function () {
+  const source = select.value
 
-  if (value === 'diy') {
+  // if user selected the "add yours" option
+  // then redirect him to the documentation on how to do so
+  if (source === 'diy') {
     window.location.href = 'https://github.com/wizbii/wizipsum/tree/gh-pages#add-yours'
     return
   }
 
-  selectData(value)
+  selectDataSource(source)
 }, false)
 
-let attempts = 0
-;(function getData (name = window.location.hash.substr(1) || defaultName) {
-  selectData(
-    name,
-    function () {
-      if (attempts++ > 4) return window.alert('Oops, couldn\'t fetch data. Are you connected to internet? If so, please try refreshing the page.')
-      getData(defaultName)
-    },
-    function () {
-      setParagraphs(2)
-      setTimeout(() => document.body.classList.add('enter-animation'), 0)
-    }
-  )
-})()
+// on page load, get source from hash
+selectDataSource(window.location.hash.substr(1))
 
-function setParagraphs (nb) {
-  if (range.value !== String(nb)) range.value = nb
-  output.innerHTML = generator.paragraph(nb, ['<p>', '</p>'])
+function selectDataSource (name) {
+  if (!data.hasOwnProperty(name)) name = 'wizbii'
+
+  select.value = name
+  window.location.hash = name
+  generator = wizipsum(data[name])
+
+  // when the source changes
+  // update the displayed paragraphs
+  setParagraphs(range.value)
 }
 
-function selectData (name, onError = () => {}, onSuccess = () => {}) {
-  const url = `public/data/${name}.json`
-
-  xhr.get(url, function (err, result) {
-    if (err) {
-      onError(err)
-      return
-    }
-
-    dataName.value = name
-    generator = wizipsum(result)
-    window.location.hash = name
-    setParagraphs(1)
-
-    onSuccess(result)
-  })
+function setParagraphs (nb) {
+  range.value = nb
+  output.innerHTML = generator.paragraph(Number(nb), ['<p>', '</p>'])
 }

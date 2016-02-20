@@ -5,13 +5,18 @@ We all have funny mates, right?
 * [Demo Page](https://wizbii.github.io/wizipsum)
 * [Chrome Extension](https://chrome.google.com/webstore/detail/wizipsum/ncibdpfgnoldfhagojkniefnaokacfhf)
 
+*This is the demo page's readme. Have a look at the [master branch](https://github.com/wizbii/wizipsum) for the wizipsum npm package.*
+
 ## Add yours
 
-If you want to add your own lorem ipsum, simply submit a pull request that adds a `name.json` file into `public/data`.
-Please note that:
+By adding your own lorem ipsum, you're making it available and shareable on the demo page and usable through the [Chrome Extension](https://chrome.google.com/webstore/detail/wizipsum/ncibdpfgnoldfhagojkniefnaokacfhf).
+All you have to do is:
 
-* The json should only contain a list of strings (e.g [public/data/wizbii.json](https://github.com/wizbii/wizipsum/blob/gh-pages/public/data/wizbii.json))
-* Use a relevant name as that's what you'll share (e.g for a file named **wizbii.json**, you'd have to share [https://wizbii.github.io/wizipsum#wizbii](https://wizbii.github.io/wizipsum#wizbii))
+1. Add your data to the [src/data.json](https://github.com/wizbii/wizipsum/blob/gh-pages/public/data/wizbii.json) file
+2. `npm install`
+3. `npm build`
+4. Submit your pull request
 
-To make it available through the demo page and from the Chrome Extension, add the name to `public/data/index.json`.
-If you do so, you'll also need to run `npm run build`.
+When your contribution gets merged, you'll then be able to share it via, e.g: https://wizbii.github.io/wizipsum#yourdata
+
+*If you want to speed up the process, you can also add your data to the [chrome-extension](https://github.com/wizbii/wizipsum/tree/chrome-extension) branch.*
