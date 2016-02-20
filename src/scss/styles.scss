@@ -126,14 +126,24 @@ button {
 footer {
   position: relative;
   background-color: $gray;
+
+  label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    position: absolute;
+    left: $spacing;
+    top: $spacing;
+  }
 }
 
-label {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  position: absolute;
-  left: $spacing;
-  top: $spacing;
+#copy-label {
+  display: block;
+  font-size: 0.8rem;
+  margin: $spacing;
+
+  input {
+    margin-right: $spacing / 2;
+  }
 }
 
 select {

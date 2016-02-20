@@ -1,3 +1,5 @@
+/* global localStorage */
+
 module.exports = {
   save: function save (key, value) {
     try {

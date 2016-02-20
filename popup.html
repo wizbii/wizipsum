@@ -41,10 +41,17 @@
       </li>
     </ul>
 
+    <label id="copy-label">
+      <input type="checkbox" id="copy" checked>
+      copy to clipboard
+    </label>
+
     <footer>
       <label for="data">source</label>
       <select id="data"></select>
     </footer>
+
+    <textarea id="clipboard" style="position: absolute; top: -999999px; left: -999999px;"></textarea>
 
     <script src="public/scripts/popup.js"></script>
   </body>
