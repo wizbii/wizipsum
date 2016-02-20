@@ -1,6 +1,6 @@
 const random = require('lodash/random')
 const sample = require('lodash/sample')
-const startCase = require('lodash/startCase')
+const startCase = require('./startCase')
 
 function pickNSplice (origin) {
   let ar = []
