@@ -3,48 +3,48 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="public/css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700|Source+Sans+Pro:300">
   </head>
 
   <body>
-    <div id="loading">Loading...</div>
+    <ul>
+      <li>
+        <button type="button">Title</button>
+      </li>
 
-    <div id="not-loading" style="display: none;">
-      <select id="name"></select>
+      <li>
+        <button type="button">Paragraph</button>
 
-      <h1>Paragraphs</h1>
+        <span class="editable">
+          length:
+          <span class="editable__value"
+                contenteditable>400</span>
+        </span>
+      </li>
 
-      <ul>
-        <li><button type="button" data-wizipsum-type="paragraph">1</button></li>
-        <li><button type="button" data-wizipsum-type="paragraph">2</button></li>
-        <li><button type="button" data-wizipsum-type="paragraph">3</button></li>
-        <li><button type="button" data-wizipsum-type="paragraph">4</button></li>
-        <li><button type="button" data-wizipsum-type="paragraph">5</button></li>
-        <li><button type="button" data-wizipsum-type="paragraph">6</button></li>
-      </ul>
+      <li>
+        <button type="button">Email</button>
 
-      <h1>Sentences</h1>
+        <span class="editable">
+          <span class="editable__value"
+                contenteditable>someone@domain.com</span>
+        </span>
+      </li>
 
-      <ul>
-        <li><button type="button" data-wizipsum-type="sentence">1</button></li>
-        <li><button type="button" data-wizipsum-type="sentence">2</button></li>
-        <li><button type="button" data-wizipsum-type="sentence">3</button></li>
-        <li><button type="button" data-wizipsum-type="sentence">4</button></li>
-        <li><button type="button" data-wizipsum-type="sentence">5</button></li>
-        <li><button type="button" data-wizipsum-type="sentence">6</button></li>
-      </ul>
+      <li>
+        <button type="button">Url</button>
 
-      <h1>Words</h1>
+        <span class="editable">
+          <span class="editable__value"
+                contenteditable>https://website.com/</span>
+        </span>
+      </li>
+    </ul>
 
-      <ul>
-        <li><button type="button" data-wizipsum-type="word">1</button></li>
-        <li><button type="button" data-wizipsum-type="word">2</button></li>
-        <li><button type="button" data-wizipsum-type="word">3</button></li>
-        <li><button type="button" data-wizipsum-type="word">4</button></li>
-        <li><button type="button" data-wizipsum-type="word">5</button></li>
-        <li><button type="button" data-wizipsum-type="word">6</button></li>
-      </ul>
-    </div>
+    <footer>
+      <label for="data">source</label>
+      <select id="data"></select>
+    </footer>
 
     <script src="public/scripts/popup.js"></script>
   </body>

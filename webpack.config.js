@@ -8,5 +8,10 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public', 'scripts'),
     filename: '[name].js'
+  },
+  module: {
+    loaders: [
+      { test: /\.json$/, loaders: ['json-loader'] }
+    ]
   }
 }

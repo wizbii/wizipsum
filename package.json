@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "fetch": "node fetch.js",
     "zip": "bestzip extension.zip icon.png popup.html manifest.json public/",
     "styles": "rm public/css/* && node-sass src/scss/styles.scss --output-style compressed | postcss --use autoprefixer --output public/css/styles.css",
     "prebuild": "npm run styles",
@@ -10,9 +11,11 @@
   "devDependencies": {
     "autoprefixer": "*",
     "bestzip": "*",
+    "json-loader": "*",
     "node-sass": "*",
     "postcss": "*",
     "postcss-cli": "*",
+    "request": "*",
     "webpack": "*",
     "wizipsum": "*"
   }

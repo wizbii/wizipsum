@@ -1,60 +1,54 @@
 /* global chrome */
 
-var xhr = require('./xhr')
-var select = document.getElementById('name')
-var loading = document.getElementById('loading')
-var notLoading = document.getElementById('not-loading')
+var data = require('../data.json')
+var storage = require('./storage')
+var currentData = []
+var select = document.querySelector('select')
+var editableValues = [].slice.call(document.querySelectorAll('.editable__value'))
 
-;(function getList (callback) {
-  xhr.get('https://wizbii.github.io/wizipsum/public/data/index.json', function (err, list) {
-    if (err) return getList(callback)
+for (var name in data) {
+  if (!data.hasOwnProperty(name)) continue
 
-    list.forEach(function (item) {
-      var option = document.createElement('option')
+  var option = document.createElement('option')
+  option.value = name
+  option.textContent = name
 
-      option.value = item
-      option.textContent = item
+  select.appendChild(option)
+}
 
-      select.appendChild(option)
-    })
+select.addEventListener('change', function () {
+  selectData(select.value)
+}, false)
 
-    callback()
+document.addEventListener('click', function (e) {
+  var target = e.target
+  if (target.tagName.toLowerCase() !== 'button') return
+
+  var name = target.textContent.trim().toLowerCase()
+  var args = [currentData]
+
+  var editableValue = target.parentElement.querySelector('.editable__value')
+  if (editableValue) args.push(editableValue.textContent.trim())
+
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { origin: 'background', name: name, args: args })
   })
-})(function () {
-  var data
+}, false)
 
-  selectData('wizbii')
+editableValues.forEach(function (editableValue) {
+  var key = editableValue.parentElement.parentElement.querySelector('button').textContent.trim().toLowerCase()
+  var value = storage.get(key)
+  if (value) editableValue.textContent = value
 
-  function selectData (name) {
-    loading.style.display = 'block'
-    notLoading.style.display = 'none'
-
-    xhr.get('https://wizbii.github.io/wizipsum/public/data/' + name + '.json', function (err, result) {
-      if (err) return selectData('wizbii')
-
-      data = result
-      if (select.value !== name) select.value = name
-
-      loading.style.display = 'none'
-      notLoading.style.display = 'block'
-    })
-  }
-
-  select.addEventListener('change', function (e) {
-    selectData(e.target.value)
-  }, false)
-
-  document.addEventListener('click', function (e) {
-    if (e.target.tagName.toLowerCase() !== 'button') return
-
-    if (data == null) return window.alert('Please wait a little bit while the data is being fetched.')
-    if (data === 'err') return window.alert('Oops, couldn\'t fetch data.')
-
-    var type = e.target.dataset.wizipsumType
-    var nb = e.target.textContent.replace(/\s/g, '')
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { from: 'background', action: 'fill', type: type, nb: nb, data: data })
-    })
+  editableValue.addEventListener('input', function () {
+    var value = editableValue.textContent.trim()
+    storage.save(key, value)
   }, false)
 })
+
+selectData('wizbii')
+
+function selectData (name) {
+  select.value = name
+  currentData = data[name]
+}
