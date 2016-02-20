@@ -62,7 +62,7 @@ document.addEventListener('click', function (e) {
   // send a message to the content script
   // so it adds the value to the focused input
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { origin: 'background', val: value })
+    chrome.tabs.sendMessage(tabs[0].id, { origin: 'background', value: value })
   })
 }, false)
 
