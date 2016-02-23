@@ -19,11 +19,11 @@ All you have to do is:
 
 When your contribution gets merged, you'll then be able to share it via, e.g: https://wizbii.github.io/wizipsum#yourdata
 
-*For it to be available through the [Chrome Extension](https://chrome.google.com/webstore/detail/wizipsum/ncibdpfgnoldfhagojkniefnaokacfhf), I'll need to add it and publish a new version.*
+*For it to be available through the [Chrome Extension](https://chrome.google.com/webstore/detail/wizipsum/ncibdpfgnoldfhagojkniefnaokacfhf), I'll need to add it to the chrome-extension branch and then publish a new version to the store.*
 
 ## Credits
 
-* [programers](http://wizbii.github.io/wizipsum#programmers)
+* [programmers](http://wizbii.github.io/wizipsum#programmers)
   * [20 Kick-ass Programming Quotes](http://www.javacodegeeks.com/2012/11/20-kick-ass-programming-quotes.html)
   * [Quotes for Software Engineers](http://www.comp.nus.edu.sg/~damithch/pages/SE-quotes.htm)
   * [My 25 Favorite Programming Quotes that are Funny too](http://www.journaldev.com/240/my-25-favorite-programming-quotes-that-are-funny-too)
