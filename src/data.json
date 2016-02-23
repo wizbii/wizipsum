@@ -20,5 +20,35 @@
     "C'est pas très quali ça les gars.",
     "C'est bien d'un pull --rebase qu'on parle?",
     "Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes."
+  ],
+
+  "programmers": [
+    "If debugging is the process of removing software bugs, then programming must be the process of putting them in.",
+    "Measuring programming progress by lines of code is like measuring aircraft building progress by weight.",
+    "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+    "Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.",
+    "C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do, it blows away your whole leg.",
+    "When debugging, novices insert corrective code; experts remove defective code.",
+    "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    "One of my most productive days was throwing away 1000 lines of code.",
+    "Before software can be reusable it first has to be usable.",
+    "Program testing can be used to show the presence of bugs, but never to show their absence!",
+    "Premature optimization is the root of all evil in programming.",
+    "Inside every large program, there is a small program trying to get out.",
+    "A good way to stay flexible is to write less code.",
+    "The perfect project plan is possible if one first documents a list of all the unknowns.",
+    "If something is worth doing once, it's worth building a tool to do it.",
+    "Without requirements or design, programming is the art of adding bugs to an empty text file.",
+    "It's not a bug - it's an undocumented feature.",
+    "One man's crappy software is another man's full time job.",
+    "A good programmer is someone who always looks both ways before crossing a one-way street.",
+    "In order to understand recursion, one must first understand recursion.",
+    "Programmer - an organism that turns coffee into software.",
+    "Programming languages, like pizzas, come in only two sizes: too big and too small.",
+    "One man's constant is another man's variable.",
+    "They don't make bugs like Bunny anymore.",
+    "Talk is cheap. Show me the code.",
+    "In theory, theory and practice are the same. In practice, they're not.",
+    "I don't care if it works on your machine! We are not shipping your machine!"
   ]
 }

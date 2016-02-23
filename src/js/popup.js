@@ -92,7 +92,7 @@ copyCheckbox.addEventListener('change', function () {
 copyCheckbox.checked = storage.get('__copy') !== 'false'
 
 // by default, select some data
-selectData('wizbii')
+selectData('programmers')
 
 // change the currentData value and ensure
 // that the select has the right option selected
