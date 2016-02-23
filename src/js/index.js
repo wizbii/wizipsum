@@ -42,7 +42,7 @@ select.addEventListener('change', function () {
 selectDataSource(window.location.hash.substr(1))
 
 function selectDataSource (name) {
-  if (!data.hasOwnProperty(name)) name = 'wizbii'
+  if (!data.hasOwnProperty(name)) name = 'programmers'
 
   select.value = name
   window.location.hash = name
