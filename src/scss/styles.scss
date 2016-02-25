@@ -172,6 +172,8 @@ $track-background: $color-secondary;
     &::-webkit-slider-thumb {
       @include thumb-styles;
       -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
   }
 
@@ -190,6 +192,8 @@ input[type=range] {
 
 input[type=range] {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
   &:focus { outline: none; }
 
@@ -222,4 +226,6 @@ select {
   background-color: transparent;
   border-radius: 0;
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
