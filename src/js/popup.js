@@ -92,11 +92,18 @@ copyCheckbox.addEventListener('change', function () {
 copyCheckbox.checked = storage.get('__copy') !== 'false'
 
 // by default, select some data
-selectData('programmers')
+var selected = storage.get('__selected')
+
+if (!data.hasOwnProperty(selected)) {
+  selected = 'programmers'
+}
+
+selectData(selected)
 
 // change the currentData value and ensure
 // that the select has the right option selected
 function selectData (name) {
   select.value = name
   currentData = data[name]
+  storage.set('__selected', name)
 }
