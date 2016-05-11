@@ -105,5 +105,5 @@ selectData(selected)
 function selectData (name) {
   select.value = name
   currentData = data[name]
-  storage.set('__selected', name)
+  storage.save('__selected', name)
 }
